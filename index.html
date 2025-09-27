@@ -1,114 +1,56 @@
-<!doctype html>
+<!DOCTYPE html>
 <html lang="fr">
 <head>
-<meta charset="utf-8"/>
-<meta name="viewport" content="width=device-width,initial-scale=1"/>
-<link rel="manifest" href="manifest.webmanifest">
-<meta name="apple-mobile-web-app-capable" content="yes">
-<meta name="apple-mobile-web-app-status-bar-style" content="black">
-<link rel="apple-touch-icon" href="icon-192.png">
-<title>Lishi Lookup (offline)</title>
-<style>
-  body{font-family:system-ui,Segoe UI,Roboto,Arial;margin:18px;color:#111}
-  input,button,select{font-size:14px;padding:8px;margin:6px 0}
-  .row{display:flex;gap:8px;flex-wrap:wrap;align-items:center}
-  table{width:100%;border-collapse:collapse;margin-top:12px}
-  th,td{border:1px solid #ddd;padding:8px;text-align:left}
-  th{background:#f4f4f4}
-  .small{font-size:13px;color:#666}
-  #msg{color:#0a7}
-</style>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Lishi Tool Finder</title>
+  <link rel="manifest" href="manifest.webmanifest">
 </head>
 <body>
-<h1>Lishi ↔ Serrures (offline)</h1>
-<p class="small">Recherche par <b>code Lishi</b> (HU66, YALE-5…) ou par <b>marque/modèle</b> (VW Golf, Yale 6…). Tout reste local.</p>
+  <h1>🔑 Lishi Tool Finder</h1>
 
-<div class="row">
-  <input id="q" placeholder="Ex: HU66 ou Yale 5 ou VW Polo" style="flex:1">
-  <button onclick="doSearch()">Chercher</button>
-  <button onclick="resetView()">Tout afficher</button>
-  <input type="file" id="fileIn" accept=".csv,.json">
-</div>
+  <p>Importe la base de données :</p>
+  <button onclick="document.getElementById('fileInput').click()">Choisir un fichier</button>
+  <input type="file" id="fileInput" style="display:none" accept=".json">
 
-<div class="row small">
-  <label>Filtrer :</label>
-  <select id="typeFilter" onchange="doSearch()">
-    <option value="">(tous)</option>
-    <option value="auto">Automobile</option>
-    <option value="euro_cylinder">Cylindre Euro</option>
-    <option value="residential">Résidentiel US</option>
-  </select>
-  <div style="flex:1"></div>
-  <span id="msg"></span>
-</div>
+  <br><br>
+  <!-- 🚀 Nouveau bouton -->
+  <button onclick="importFromGitHub()">Importer depuis GitHub</button>
 
-<table id="results">
-  <thead><tr><th>Code Lishi</th><th>Keyway/Code</th><th>Type</th><th>Compatibilités</th><th>Notes</th></tr></thead>
-  <tbody></tbody>
-</table>
+  <p id="status"></p>
 
-<script>
-// -- Données de départ (tu complètes ensuite) --
-let db = [
-  {lishi:"HU66", keyway:"HU66 (VW Group)", type:"auto", compat:"VW / Audi / Seat (nombreux modèles)", notes:"Ignition/door selon années"},
-  {lishi:"HU49", keyway:"HU49", type:"auto", compat:"VW / Audi (anciennes plateformes)", notes:""},
-  {lishi:"HU100", keyway:"HU100 / HU100R", type:"auto", compat:"GM / Opel / Vauxhall", notes:"10-cut"},
-  {lishi:"HU92", keyway:"HU92", type:"auto", compat:"BMW (E-series + certains F)", notes:""},
-  {lishi:"HU101", keyway:"HU101", type:"auto", compat:"Ford / Jaguar / Land Rover (selon année)", notes:""},
-  {lishi:"YALE-5", keyway:"Yale 5 pins", type:"euro_cylinder", compat:"Cylindre euro Yale 5 goupilles", notes:""},
-  {lishi:"YALE-6", keyway:"Yale 6 pins", type:"euro_cylinder", compat:"Cylindre euro Yale 6 goupilles", notes:""},
-  {lishi:"SC1", keyway:"Schlage SC1", type:"residential", compat:"Schlage 5-pin (US)", notes:""},
-  {lishi:"KW1", keyway:"Kwikset KW1", type:"residential", compat:"Kwikset (US)", notes:""}
-];
+  <script>
+    const fileInput = document.getElementById('fileInput');
+    const status = document.getElementById('status');
 
-function render(list){
-  const tb=document.querySelector("#results tbody");
-  tb.innerHTML="";
-  if(!list.length){tb.innerHTML="<tr><td colspan=5>Aucun résultat</td></tr>";return;}
-  for(const r of list){
-    const tr=document.createElement("tr");
-    tr.innerHTML = `<td>${r.lishi||""}</td><td>${r.keyway||""}</td><td>${r.type||""}</td><td>${r.compat||""}</td><td>${r.notes||""}</td>`;
-    tb.appendChild(tr);
-  }
-}
-function doSearch(){
-  const q=document.getElementById("q").value.trim().toLowerCase();
-  const t=document.getElementById("typeFilter").value;
-  const res = db.filter(x=>{
-    if(t && x.type!==t) return false;
-    if(!q) return true;
-    return [x.lishi,x.keyway,x.compat,x.notes].some(v=> (v||"").toLowerCase().includes(q));
-  });
-  render(res);
-}
-function resetView(){ document.getElementById("q").value=""; document.getElementById("typeFilter").value=""; render(db); }
+    // Import local JSON
+    fileInput.addEventListener('change', async (event) => {
+      const file = event.target.files[0];
+      if (file) {
+        const text = await file.text();
+        try {
+          const json = JSON.parse(text);
+          localStorage.setItem("lishiData", JSON.stringify(json));
+          status.innerText = "✅ JSON importé (" + Object.keys(json).length + " entrées)";
+        } catch (e) {
+          status.innerText = "❌ Erreur : fichier invalide";
+        }
+      }
+    });
 
-// Import CSV/JSON pour enrichir la base (stockée aussi en localStorage)
-document.getElementById("fileIn").addEventListener("change", async e=>{
-  const f=e.target.files[0]; if(!f) return;
-  const txt=await f.text();
-  try{
-    if(f.name.toLowerCase().endsWith(".json")){
-      const arr=JSON.parse(txt); if(Array.isArray(arr)){ db=db.concat(arr); save(); document.getElementById("msg").textContent="JSON importé: "+arr.length; resetView(); return; }
-    } else {
-      const lines=txt.split(/\r?\n/).filter(Boolean);
-      const header=lines.shift().split(/[,;]+/).map(s=>s.trim().toLowerCase());
-      const arr=lines.map(L=>{
-        const c=L.split(/[,;]+/).map(s=>s.trim());
-        const o={}; header.forEach((h,i)=>o[h]=c[i]||""); return o;
-      });
-      db=db.concat(arr); save(); document.getElementById("msg").textContent="CSV importé: "+arr.length; resetView(); return;
+    // Import depuis GitHub
+    async function importFromGitHub() {
+      const url = "https://raw.githubusercontent.com/DpixM/lishi/main/lishi_db_expanded.json";
+      try {
+        const response = await fetch(url);
+        if (!response.ok) throw new Error("Impossible de charger le fichier");
+        const data = await response.json();
+        localStorage.setItem("lishiData", JSON.stringify(data));
+        status.innerText = "✅ Données importées depuis GitHub (" + Object.keys(data).length + " entrées)";
+      } catch (error) {
+        status.innerText = "❌ Erreur : " + error.message;
+      }
     }
-    document.getElementById("msg").textContent="Format non reconnu";
-  }catch(err){ document.getElementById("msg").textContent="Erreur import: "+err.message; }
-});
-function save(){ localStorage.setItem("lishi_db", JSON.stringify(db)); }
-(function load(){ const s=localStorage.getItem("lishi_db"); if(s){ try{db=JSON.parse(s)}catch{} } })();
-
-render(db);
-
-// PWA: enregistrement du service worker
-if('serviceWorker' in navigator){ window.addEventListener('load', ()=> navigator.serviceWorker.register('service-worker.js')); }
-</script>
+  </script>
 </body>
 </html>
