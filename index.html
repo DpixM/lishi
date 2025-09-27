@@ -3,138 +3,157 @@
 <head>
   <meta charset="utf-8"/>
   <meta name="viewport" content="width=device-width,initial-scale=1"/>
-  <title>Lishi Tool Finder</title>
+  <title>Lishi ↔ Serrures (offline)</title>
   <style>
-    body{font-family:system-ui,Segoe UI,Roboto,Arial;margin:12px;color:#111}
-    h1{font-size:20px;margin-bottom:6px}
+    body{font-family:system-ui,Segoe UI,Roboto,Arial;margin:16px;color:#111}
+    h1{margin:0 0 8px;font-size:26px}
+    .small{color:#666;font-size:13px;margin-bottom:10px}
     .row{display:flex;gap:8px;flex-wrap:wrap;align-items:center;margin:8px 0}
     input,select,button{padding:8px;font-size:14px}
+    button{border-radius:6px;border:1px solid #ccc;background:#f7f7f7;cursor:pointer}
+    .primary{background:#0a7;color:#fff;border-color:#0a7}
     table{width:100%;border-collapse:collapse;margin-top:10px}
-    th,td{border:1px solid #ddd;padding:6px;text-align:left;font-size:13px}
+    th,td{border:1px solid #ddd;padding:8px;text-align:left;font-size:14px}
     th{background:#f6f6f6}
-    .small{font-size:12px;color:#666}
-    .muted{color:#666;font-size:13px}
-    .btn{background:#0a7;color:#fff;border:none;border-radius:6px;padding:8px 10px}
-    .btn-alt{background:#ddd;border:none;border-radius:6px;padding:8px 10px}
-    .fav{color:gold;font-weight:bold}
-    #status{margin-top:8px;font-size:13px}
-    .actions{display:flex;gap:6px;flex-wrap:wrap}
+    #status{margin-top:6px;color:#444;font-size:13px}
   </style>
 </head>
 <body>
-  <h1>🔑 Lishi Tool Finder</h1>
-  <div class="small">Recherche par <b>code</b>, <b>marque/modèle</b>, <b>keyway</b> ou <b>compatibilité</b>. Base locale (sur iPhone).</div>
+  <h1>Lishi ↔ Serrures (offline)</h1>
+  <div class="small">Recherche par <b>code Lishi</b> (HU66, YALE-5…) ou par <b>marque/modèle</b> (VW Golf, Yale 6…). Tout reste local.</div>
 
   <div class="row">
-    <input id="q" placeholder="Ex: HU66 ou Yale 5 ou VW Polo" style="flex:1">
-    <select id="typeFilter" style="width:150px">
-      <option value="">(Tous types)</option>
-      <option value="auto">Automobile</option>
-      <option value="euro_cylinder">Cylindre Euro</option>
-      <option value="residential">Résidentiel/Padlock</option>
-      <option value="motorbike">Scooter/Moto</option>
-      <option value="dimple">Dimple / High-sec</option>
-      <option value="special">Spécial</option>
+    <input id="q" placeholder="Ex: HU66 ou Yale 5 ou VW Polo" style="flex:1;min-width:220px">
+    <button class="primary" onclick="doSearch()">Chercher</button>
+    <button onclick="resetView()">Tout afficher</button>
+
+    <label for="typeFilter">Filtrer :</label>
+    <select id="typeFilter" onchange="doSearch()">
+      <option value="">(tous)</option>
+      <option value="auto">auto</option>
+      <option value="euro_cylinder">euro_cylinder</option>
+      <option value="residential">residential</option>
+      <option value="motorbike">motorbike</option>
+      <option value="dimple">dimple</option>
+      <option value="special">special</option>
     </select>
-    <button class="btn" onclick="doSearch()">Chercher</button>
-    <button class="btn-alt" onclick="resetView()">Tout afficher</button>
-  </div>
 
-  <div class="row actions">
-    <button class="btn-alt" onclick="document.getElementById('fileIn').click()">Importer fichier (.json/.csv)</button>
     <input id="fileIn" type="file" accept=".json,.csv" style="display:none">
-    <button class="btn" onclick="importFromGitHub()">Importer depuis GitHub</button>
-    <button class="btn-alt" onclick="exportJSON()">Exporter JSON</button>
-    <button class="btn-alt" onclick="exportCSV()">Exporter CSV</button>
-    <button class="btn-alt" onclick="resetDB()">Reset base locale</button>
+    <button onclick="document.getElementById('fileIn').click()">Parcourir…</button>
+    <button class="primary" onclick="importFromGitHub()">Importer depuis GitHub</button>
   </div>
 
-  <div id="status" class="muted">Base locale : <span id="count">0</span> entrées.</div>
+  <div id="status">Base locale : <span id="count">0</span> entrées.</div>
 
   <table id="results" aria-live="polite">
-    <thead><tr><th>Code Lishi</th><th>Keyway / Code</th><th>Type</th><th>Compatibilités</th><th>Notes</th><th>★</th></tr></thead>
+    <thead>
+      <tr>
+        <th>Code Lishi</th>
+        <th>Keyway/Code</th>
+        <th>Type</th>
+        <th>Compatibilités</th>
+        <th>Notes</th>
+      </tr>
+    </thead>
     <tbody></tbody>
   </table>
 
 <script>
+/* --------- CONFIG --------- */
+/* si besoin, adapte juste cette URL vers TON fichier JSON brut (raw) */
 const repoRawUrl = "https://raw.githubusercontent.com/DpixM/lishi/main/lishi_db_full_seed.json";
+
+/* --------- STATE --------- */
 let db = [];
 const storageKey = "lishiData_v1";
-const favKey = "lishiFavs_v1";
 
+/* --------- HELPERS --------- */
 function setStatus(msg){ document.getElementById("status").innerText = msg; }
-function loadLocalDB(){ const raw = localStorage.getItem(storageKey); if(raw){ try{ db = JSON.parse(raw); return true;}catch(e){} } return false; }
-function saveLocalDB(){ localStorage.setItem(storageKey, JSON.stringify(db)); updateCount(); }
-function updateCount(){ document.getElementById("count").innerText = (db && db.length) ? db.length : 0; }
-(function init(){ if(loadLocalDB()){ setStatus("Base locale chargée ("+db.length+" entrées)."); render(db);} else { setStatus("Base vide localement. Cliquez sur 'Importer depuis GitHub' ou chargez un fichier."); render([]);} })();
+function updateCount(){ document.getElementById("count").innerText = db.length || 0; }
+function saveLocal(){ localStorage.setItem(storageKey, JSON.stringify(db)); updateCount(); }
+function loadLocal(){
+  try{ const s = localStorage.getItem(storageKey); if(s){ db = JSON.parse(s)||[]; }}catch(e){}
+  updateCount();
+}
 
+/* --------- RENDER --------- */
+function escapeHTML(s){ return String(s||"").replace(/[&<>"']/g, c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":"&#39;"}[c])); }
 function render(list){
-  const tbody=document.querySelector("#results tbody"); tbody.innerHTML="";
-  if(!list||!list.length){tbody.innerHTML="<tr><td colspan='6' class='muted'>Aucun résultat</td></tr>"; return;}
-  const favs=JSON.parse(localStorage.getItem(favKey)||"[]");
+  const tb = document.querySelector("#results tbody");
+  tb.innerHTML = "";
+  if(!list.length){ tb.innerHTML = `<tr><td colspan="5" style="color:#666">Aucun résultat</td></tr>`; return; }
   for(const r of list){
-    const tr=document.createElement("tr");
-    const isFav=favs.includes(r.lishi);
-    tr.innerHTML=`
+    const tr = document.createElement("tr");
+    tr.innerHTML = `
       <td>${escapeHTML(r.lishi||"")}</td>
       <td>${escapeHTML(r.keyway||"")}</td>
       <td>${escapeHTML(r.type||"")}</td>
       <td>${escapeHTML(r.compat||"")}</td>
       <td>${escapeHTML(r.notes||"")}</td>
-      <td style="text-align:center"><button onclick="toggleFav('${encodeURIComponent(r.lishi||"")}')">${isFav?"★":"☆"}</button></td>
     `;
-    tbody.appendChild(tr);
+    tb.appendChild(tr);
   }
 }
 
+/* --------- SEARCH --------- */
 function doSearch(){
-  const q=(document.getElementById("q").value||"").trim().toLowerCase();
-  const type=document.getElementById("typeFilter").value;
-  let res=db.filter(item=>{
-    if(type&&item.type!==type) return false;
+  const q = (document.getElementById("q").value||"").toLowerCase().trim();
+  const t = document.getElementById("typeFilter").value;
+  const res = db.filter(x=>{
+    if(t && x.type !== t) return false;
     if(!q) return true;
-    return [item.lishi,item.keyway,item.compat,item.notes].some(v=>(v||"").toLowerCase().includes(q));
+    return [x.lishi,x.keyway,x.compat,x.notes].some(v => (v||"").toLowerCase().includes(q));
   });
   render(res);
-  setStatus("Résultats : "+res.length+(db.length?" / base total "+db.length:""));
 }
-function resetView(){ document.getElementById("q").value=""; document.getElementById("typeFilter").value=""; render(db); setStatus("Affichage complet ("+db.length+" entrées)"); }
+function resetView(){ document.getElementById("q").value=""; document.getElementById("typeFilter").value=""; render(db); }
 
-document.getElementById("fileIn").addEventListener("change", async (ev)=>{
-  const f=ev.target.files[0]; if(!f) return;
-  const txt=await f.text();
+/* --------- IMPORTS --------- */
+document.getElementById("fileIn").addEventListener("change", async ev=>{
+  const f = ev.target.files[0]; if(!f) return;
+  const txt = await f.text();
   try{
     if(f.name.toLowerCase().endsWith(".json")){
-      const arr=JSON.parse(txt);
-      if(!Array.isArray(arr)) throw new Error("JSON doit être un tableau");
-      db=db.concat(arr); saveLocalDB(); setStatus("JSON importé: "+arr.length+" lignes (total "+db.length+")"); render(db);
+      const arr = JSON.parse(txt);
+      if(!Array.isArray(arr)) throw new Error("JSON attendu = tableau d’objets");
+      db = db.concat(arr);
     } else {
-      const lines=txt.split(/\r?\n/).filter(Boolean);
-      const header=lines.shift().split(/[,;]+/).map(h=>h.trim().toLowerCase());
-      const arr=lines.map(L=>{const cols=L.split(/[,;]+/).map(c=>c.trim()); const o={}; header.forEach((h,i)=> o[h]=cols[i]||""); return o;});
-      db=db.concat(arr); saveLocalDB(); setStatus("CSV importé: "+arr.length+" lignes (total "+db.length+")"); render(db);
+      const lines = txt.split(/\r?\n/).filter(Boolean);
+      const header = lines.shift().split(/[,;]+/).map(s=>s.trim().toLowerCase());
+      const arr = lines.map(L=>{
+        const cols = L.split(/[,;]+/).map(s=>s.trim());
+        const o={}; header.forEach((h,i)=>o[h]=cols[i]||""); return o;
+      });
+      db = db.concat(arr);
     }
-  }catch(err){ setStatus("Erreur import: "+err.message); }
+    saveLocal();
+    setStatus("Import OK. Total : "+db.length);
+    render(db);
+  }catch(e){
+    setStatus("Erreur import : "+e.message);
+  }
 });
 
 async function importFromGitHub(){
-  setStatus("Téléchargement depuis GitHub...");
+  setStatus("Téléchargement depuis GitHub…");
   try{
-    const res=await fetch(repoRawUrl);
-    if(!res.ok) throw new Error("Impossible de charger depuis GitHub (status "+res.status+")");
-    const data=await res.json();
-    if(!Array.isArray(data)) throw new Error("Format non valide");
-    db=data; saveLocalDB(); render(db);
+    const r = await fetch(repoRawUrl);
+    if(!r.ok) throw new Error("HTTP "+r.status);
+    const arr = await r.json();
+    if(!Array.isArray(arr)) throw new Error("Format non valide");
+    db = arr; // on remplace la base locale par la version GitHub
+    saveLocal();
     setStatus("✅ Importé depuis GitHub ("+db.length+" entrées)");
-  }catch(e){ setStatus("Erreur GitHub: "+e.message); }
+    render(db);
+  }catch(e){
+    setStatus("❌ Échec import GitHub : "+e.message);
+  }
 }
-function exportJSON(){ const blob=new Blob([JSON.stringify(db,null,2)],{type:"application/json"}); downloadBlob(blob,"lishi_export.json"); }
-function exportCSV(){ if(!db.length) return setStatus("Rien à exporter"); const keys=["lishi","keyway","type","compat","notes"]; const rows=[keys.join(",")].concat(db.map(o=>keys.map(k=>JSON.stringify(o[k]||"").replace(/^"|"$/g,"")).join(","))); const blob=new Blob([rows.join("\n")],{type:"text/csv"}); downloadBlob(blob,"lishi_export.csv"); }
-function resetDB(){ if(!confirm("Remplacer la base locale par une base vide ?")) return; db=[]; saveLocalDB(); render([]); setStatus("Base réinitialisée."); }
-function toggleFav(encoded){ const code=decodeURIComponent(encoded); const favs=JSON.parse(localStorage.getItem(favKey)||"[]"); const idx=favs.indexOf(code); if(idx===-1) favs.push(code); else favs.splice(idx,1); localStorage.setItem(favKey,JSON.stringify(favs)); doSearch(); }
-function downloadBlob(blob,filename){ const url=URL.createObjectURL(blob); const a=document.createElement("a"); a.href=url; a.download=filename; document.body.appendChild(a); a.click(); setTimeout(()=>{URL.revokeObjectURL(url); a.remove();},500); }
-function escapeHTML(s){ return String(s||"").replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":"&#39;"}[c])); }
-document.getElementById("q").addEventListener("keydown",(e)=>{ if(e.key==="Enter") doSearch(); });
+
+/* --------- INIT --------- */
+loadLocal();
+render(db);
+document.getElementById("q").addEventListener("keydown",e=>{ if(e.key==="Enter") doSearch(); });
 </script>
 </body>
 </html>
