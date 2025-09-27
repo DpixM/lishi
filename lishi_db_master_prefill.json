@@ -1,0 +1,298 @@
+[
+  {
+    "lishi": "HU66",
+    "keyway": "HU66",
+    "type": "auto",
+    "compat": "VW / Audi / Seat / Skoda (divers modèles)",
+    "notes": "",
+    "lishi_code": "HU66"
+  },
+  {
+    "lishi": "HU49",
+    "keyway": "HU49",
+    "type": "auto",
+    "compat": "VW / Audi anciennes plateformes",
+    "notes": "",
+    "lishi_code": "HU49"
+  },
+  {
+    "lishi": "HU162T",
+    "keyway": "HU162T",
+    "type": "auto",
+    "compat": "VAG MQB / plateformes récentes (var.)",
+    "notes": "",
+    "lishi_code": "HU162T"
+  },
+  {
+    "lishi": "HU100",
+    "keyway": "HU100",
+    "type": "auto",
+    "compat": "GM / Opel / Vauxhall",
+    "notes": "",
+    "lishi_code": "HU100"
+  },
+  {
+    "lishi": "HU101",
+    "keyway": "HU101",
+    "type": "auto",
+    "compat": "Ford / Jaguar / Land Rover (selon année)",
+    "notes": "",
+    "lishi_code": "HU101"
+  },
+  {
+    "lishi": "HU92",
+    "keyway": "HU92",
+    "type": "auto",
+    "compat": "BMW E-series (+ certains F)",
+    "notes": "",
+    "lishi_code": "HU92"
+  },
+  {
+    "lishi": "VA2",
+    "keyway": "VA2",
+    "type": "auto",
+    "compat": "PSA (Peugeot/Citroën) VA2",
+    "notes": "",
+    "lishi_code": "VA2"
+  },
+  {
+    "lishi": "VA3",
+    "keyway": "VA3",
+    "type": "auto",
+    "compat": "PSA VA3",
+    "notes": "",
+    "lishi_code": "VA3"
+  },
+  {
+    "lishi": "VA6",
+    "keyway": "VA6",
+    "type": "auto",
+    "compat": "PSA VA6",
+    "notes": "",
+    "lishi_code": "VA6"
+  },
+  {
+    "lishi": "HU83",
+    "keyway": "HU83",
+    "type": "auto",
+    "compat": "PSA anciennes",
+    "notes": "",
+    "lishi_code": "HU83"
+  },
+  {
+    "lishi": "REN-LASER",
+    "keyway": "Renault laser",
+    "type": "auto",
+    "compat": "Renault Clio/Mégane laser family (vérifier profil)",
+    "notes": "",
+    "lishi_code": ""
+  },
+  {
+    "lishi": "NE72",
+    "keyway": "NE72",
+    "type": "auto",
+    "compat": "Renault/Dacia (anciennes)",
+    "notes": "",
+    "lishi_code": "NE72"
+  },
+  {
+    "lishi": "NE78",
+    "keyway": "NE78",
+    "type": "auto",
+    "compat": "Renault/Dacia (moyennes)",
+    "notes": "",
+    "lishi_code": "NE78"
+  },
+  {
+    "lishi": "KW1",
+    "keyway": "KW1",
+    "type": "residential",
+    "compat": "Kwikset KW1 (résidentiel US 5-pin)",
+    "notes": "",
+    "lishi_code": "KW1"
+  },
+  {
+    "lishi": "KW5",
+    "keyway": "KW5",
+    "type": "residential",
+    "compat": "Kwikset KW5 (6-pin)",
+    "notes": "",
+    "lishi_code": "KW5"
+  },
+  {
+    "lishi": "SC1",
+    "keyway": "SC1",
+    "type": "residential",
+    "compat": "Schlage SC1 (5-pin)",
+    "notes": "",
+    "lishi_code": "SC1"
+  },
+  {
+    "lishi": "SC4",
+    "keyway": "SC4",
+    "type": "residential",
+    "compat": "Schlage SC4 (6-pin)",
+    "notes": "",
+    "lishi_code": "SC4"
+  },
+  {
+    "lishi": "YALE-5",
+    "keyway": "YALE-5",
+    "type": "euro_cylinder",
+    "compat": "Yale euro 5 goupilles (résidentiel EU)",
+    "notes": "",
+    "lishi_code": "YALE-5"
+  },
+  {
+    "lishi": "YALE-6",
+    "keyway": "YALE-6",
+    "type": "euro_cylinder",
+    "compat": "Yale euro 6 goupilles",
+    "notes": "",
+    "lishi_code": "YALE-6"
+  },
+  {
+    "lishi": "SIP22",
+    "keyway": "SIP22",
+    "type": "auto",
+    "compat": "Fiat/Alfa/Lancia",
+    "notes": "",
+    "lishi_code": "SIP22"
+  },
+  {
+    "lishi": "TOY48",
+    "keyway": "TOY48",
+    "type": "auto",
+    "compat": "Toyota / Lexus laser family",
+    "notes": "",
+    "lishi_code": "TOY48"
+  },
+  {
+    "lishi": "HU56",
+    "keyway": "HU56",
+    "type": "auto",
+    "compat": "Volvo (anciennes)",
+    "notes": "",
+    "lishi_code": "HU56"
+  },
+  {
+    "lishi": "NSN14",
+    "keyway": "NSN14",
+    "type": "auto",
+    "compat": "Nissan keyway (divers)",
+    "notes": "",
+    "lishi_code": "NSN14"
+  },
+  {
+    "lishi": "MAZ24",
+    "keyway": "MAZ24",
+    "type": "auto",
+    "compat": "Mazda",
+    "notes": "",
+    "lishi_code": "MAZ24"
+  },
+  {
+    "lishi": "YM28",
+    "keyway": "YM28",
+    "type": "motorbike",
+    "compat": "Yamaha / MBK scooters/motos",
+    "notes": "",
+    "lishi_code": "YM28"
+  },
+  {
+    "lishi": "ZADI",
+    "keyway": "ZADI",
+    "type": "motorbike",
+    "compat": "Piaggio / Vespa neiman (ZADI)",
+    "notes": "",
+    "lishi_code": "ZADI"
+  },
+  {
+    "lishi": "KYMCO-KH",
+    "keyway": "KYMCO-KH",
+    "type": "motorbike",
+    "compat": "Kymco (scooters)",
+    "notes": "",
+    "lishi_code": "KYMCO-KH"
+  },
+  {
+    "lishi": "VACHETTE-VX",
+    "keyway": "Vachette VX/VIP",
+    "type": "dimple",
+    "compat": "Vachette radial/dimple families",
+    "notes": "VERIFIER/HS - outils spécifiques, pas Lishi standard",
+    "lishi_code": ""
+  },
+  {
+    "lishi": "ABLOY-PROTEC",
+    "keyway": "Abloy Protec",
+    "type": "special",
+    "compat": "Abloy Protec/Protec2 - disc-detainer",
+    "notes": "VERIFIER/HS - outils dédiés",
+    "lishi_code": ""
+  },
+  {
+    "lishi": "MUL-T-LOCK-MT5",
+    "keyway": "Mul-T-Lock MT5+",
+    "type": "dimple",
+    "compat": "Mul-T-Lock families",
+    "notes": "VERIFIER/HS - machine/lecteur requis",
+    "lishi_code": ""
+  },
+  {
+    "lishi": "EVVA-ICS",
+    "keyway": "EVVA ICS/3KS",
+    "type": "special",
+    "compat": "EVVA high-security",
+    "notes": "VERIFIER/HS",
+    "lishi_code": ""
+  },
+  {
+    "lishi": "DOM-IX",
+    "keyway": "DOM ix/ix Twin",
+    "type": "dimple",
+    "compat": "DOM / Kaba varieties",
+    "notes": "VERIFIER/HS",
+    "lishi_code": ""
+  },
+  {
+    "lishi": "FICHET",
+    "keyway": "Fichet",
+    "type": "special",
+    "compat": "Fichet - systèmes propriétaires",
+    "notes": "VERIFIER/HS",
+    "lishi_code": ""
+  },
+  {
+    "lishi": "YALE-DIMPLE",
+    "keyway": "Yale dimple",
+    "type": "dimple",
+    "compat": "Yale dimple variants (verify)",
+    "notes": "VERIFIER/HS possible",
+    "lishi_code": ""
+  },
+  {
+    "lishi": "BRICARD",
+    "keyway": "Bricard",
+    "type": "euro_cylinder",
+    "compat": "Bricard / Héraclès series (France)",
+    "notes": "",
+    "lishi_code": ""
+  },
+  {
+    "lishi": "CISA",
+    "keyway": "CISA",
+    "type": "euro_cylinder",
+    "compat": "CISA euro cylinders",
+    "notes": "",
+    "lishi_code": ""
+  },
+  {
+    "lishi": "ABUS",
+    "keyway": "ABUS",
+    "type": "euro_cylinder",
+    "compat": "Abus cylinders",
+    "notes": "",
+    "lishi_code": ""
+  }
+]
