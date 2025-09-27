@@ -1,56 +1,247 @@
-<!DOCTYPE html>
+<!doctype html>
 <html lang="fr">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta charset="utf-8"/>
+  <meta name="viewport" content="width=device-width,initial-scale=1"/>
   <title>Lishi Tool Finder</title>
-  <link rel="manifest" href="manifest.webmanifest">
+  <style>
+    body{font-family:system-ui,Segoe UI,Roboto,Arial;margin:12px;color:#111}
+    h1{font-size:20px;margin-bottom:6px}
+    .row{display:flex;gap:8px;flex-wrap:wrap;align-items:center;margin:8px 0}
+    input,select,button{padding:8px;font-size:14px}
+    table{width:100%;border-collapse:collapse;margin-top:10px}
+    th,td{border:1px solid #ddd;padding:6px;text-align:left;font-size:13px}
+    th{background:#f6f6f6}
+    .small{font-size:12px;color:#666}
+    .muted{color:#666;font-size:13px}
+    .btn{background:#0a7;color:#fff;border:none;border-radius:6px;padding:8px 10px}
+    .btn-alt{background:#ddd;border:none;border-radius:6px;padding:8px 10px}
+    .fav{color:gold;font-weight:bold}
+    #status{margin-top:8px;font-size:13px}
+    .actions{display:flex;gap:6px;flex-wrap:wrap}
+    @media(min-width:720px){ .row{align-items:center} }
+  </style>
 </head>
 <body>
   <h1>🔑 Lishi Tool Finder</h1>
+  <div class="small">Recherche par <b>code</b>, <b>marque/modèle</b>, <b>keyway</b> ou <b>compatibilité</b>. Base locale (sur iPhone).</div>
 
-  <p>Importe la base de données :</p>
-  <button onclick="document.getElementById('fileInput').click()">Choisir un fichier</button>
-  <input type="file" id="fileInput" style="display:none" accept=".json">
+  <div class="row">
+    <input id="q" placeholder="Ex: HU66 ou Yale 5 ou VW Polo" style="flex:1">
+    <select id="typeFilter" style="width:150px">
+      <option value="">(Tous types)</option>
+      <option value="auto">Automobile</option>
+      <option value="euro_cylinder">Cylindre Euro</option>
+      <option value="residential">Résidentiel/Padlock</option>
+      <option value="motorbike">Scooter/Moto</option>
+      <option value="dimple">Dimple / High-sec</option>
+    </select>
+    <button class="btn" onclick="doSearch()">Chercher</button>
+    <button class="btn-alt" onclick="resetView()">Tout afficher</button>
+  </div>
 
-  <br><br>
-  <!-- 🚀 Nouveau bouton -->
-  <button onclick="importFromGitHub()">Importer depuis GitHub</button>
+  <div class="row actions">
+    <button class="btn-alt" onclick="document.getElementById('fileIn').click()">Importer fichier (.json/.csv)</button>
+    <input id="fileIn" type="file" accept=".json,.csv" style="display:none">
+    <button class="btn" onclick="importFromGitHub()">Importer depuis GitHub</button>
+    <button class="btn-alt" onclick="exportJSON()">Exporter JSON</button>
+    <button class="btn-alt" onclick="exportCSV()">Exporter CSV</button>
+    <button class="btn-alt" onclick="resetDB()">Reset base locale</button>
+  </div>
 
-  <p id="status"></p>
+  <div id="status" class="muted">Base locale : <span id="count">0</span> entrées.</div>
 
-  <script>
-    const fileInput = document.getElementById('fileInput');
-    const status = document.getElementById('status');
+  <table id="results" aria-live="polite">
+    <thead><tr><th>Code Lishi</th><th>Keyway / Code</th><th>Type</th><th>Compatibilités</th><th>Notes</th><th>★</th></tr></thead>
+    <tbody></tbody>
+  </table>
 
-    // Import local JSON
-    fileInput.addEventListener('change', async (event) => {
-      const file = event.target.files[0];
-      if (file) {
-        const text = await file.text();
-        try {
-          const json = JSON.parse(text);
-          localStorage.setItem("lishiData", JSON.stringify(json));
-          status.innerText = "✅ JSON importé (" + Object.keys(json).length + " entrées)";
-        } catch (e) {
-          status.innerText = "❌ Erreur : fichier invalide";
-        }
-      }
-    });
+<script>
+/* ===========================
+   Utils + initial data load
+   =========================== */
 
-    // Import depuis GitHub
-    async function importFromGitHub() {
-      const url = "https://raw.githubusercontent.com/DpixM/lishi/main/lishi_db_expanded.json";
-      try {
-        const response = await fetch(url);
-        if (!response.ok) throw new Error("Impossible de charger le fichier");
-        const data = await response.json();
-        localStorage.setItem("lishiData", JSON.stringify(data));
-        status.innerText = "✅ Données importées depuis GitHub (" + Object.keys(data).length + " entrées)";
-      } catch (error) {
-        status.innerText = "❌ Erreur : " + error.message;
-      }
+const repoRawUrl = "https://raw.githubusercontent.com/DpixM/lishi/main/lishi_db_expanded.json";
+let db = []; // array of objects {lishi,keyway,type,compat,notes}
+const storageKey = "lishiData_v1";
+const favKey = "lishiFavs_v1";
+
+function setStatus(msg){
+  document.getElementById("status").innerText = msg;
+}
+
+function loadLocalDB(){
+  const raw = localStorage.getItem(storageKey);
+  if(raw){
+    try{
+      db = JSON.parse(raw);
+      return true;
+    }catch(e){}
+  }
+  return false;
+}
+
+function saveLocalDB(){
+  localStorage.setItem(storageKey, JSON.stringify(db));
+  updateCount();
+}
+
+function updateCount(){
+  document.getElementById("count").innerText = (db && db.length) ? db.length : 0;
+}
+
+/* Try to autoload from localStorage, else attempt to fetch the repo (non blocking) */
+(function init(){
+  if(loadLocalDB()){
+    setStatus("Base locale chargée (" + db.length + " entrées).");
+    render(db);
+  } else {
+    setStatus("Base vide localement. Cliquez sur 'Importer depuis GitHub' ou chargez un fichier.");
+    render([]);
+  }
+})();
+
+/* ===========================
+   Rendering + search
+   =========================== */
+
+function render(list){
+  const tbody = document.querySelector("#results tbody");
+  tbody.innerHTML = "";
+  if(!list || !list.length){ tbody.innerHTML = "<tr><td colspan='6' class='muted'>Aucun résultat</td></tr>"; return; }
+  const favs = JSON.parse(localStorage.getItem(favKey) || "[]");
+  for(const r of list){
+    const tr = document.createElement("tr");
+    const isFav = favs.includes(r.lishi);
+    tr.innerHTML = `
+      <td>${escapeHTML(r.lishi||"")}</td>
+      <td>${escapeHTML(r.keyway||"")}</td>
+      <td>${escapeHTML(r.type||"")}</td>
+      <td>${escapeHTML(r.compat||"")}</td>
+      <td>${escapeHTML(r.notes||"")}</td>
+      <td style="text-align:center"><button onclick="toggleFav('${encodeURIComponent(r.lishi||"")}')">${isFav? "★" : "☆"}</button></td>
+    `;
+    tbody.appendChild(tr);
+  }
+}
+
+function doSearch(){
+  const q = (document.getElementById("q").value||"").trim().toLowerCase();
+  const type = document.getElementById("typeFilter").value;
+  let res = db.filter(item=>{
+    if(type && item.type !== type) return false;
+    if(!q) return true;
+    return [item.lishi, item.keyway, item.compat, item.notes].some(v=> (v||"").toLowerCase().includes(q));
+  });
+  render(res);
+  setStatus("Résultats : " + res.length + (db.length ? " / base total " + db.length : ""));
+}
+
+function resetView(){ document.getElementById("q").value=""; document.getElementById("typeFilter").value=""; render(db); setStatus("Affichage complet ("+db.length+" entrées)"); }
+
+/* ===========================
+   Import / Export
+   =========================== */
+
+document.getElementById("fileIn").addEventListener("change", async (ev)=>{
+  const f = ev.target.files[0]; if(!f) return;
+  const txt = await f.text();
+  try{
+    if(f.name.toLowerCase().endsWith(".json")){
+      const arr = JSON.parse(txt);
+      if(!Array.isArray(arr)) throw new Error("JSON doit être un tableau d'objets");
+      db = db.concat(arr);
+      saveLocalDB();
+      setStatus("JSON importé: " + arr.length + " lignes (total " + db.length + ")");
+      render(db);
+    } else {
+      // CSV simple: header must contain lishi,keyway,type,compat,notes
+      const lines = txt.split(/\r?\n/).filter(Boolean);
+      const header = lines.shift().split(/[,;]+/).map(h=>h.trim().toLowerCase());
+      const arr = lines.map(L=>{
+        const cols = L.split(/[,;]+/).map(c=>c.trim());
+        const o = {};
+        header.forEach((h,i)=> o[h] = cols[i] || "");
+        return o;
+      });
+      db = db.concat(arr);
+      saveLocalDB();
+      setStatus("CSV importé: " + arr.length + " lignes (total " + db.length + ")");
+      render(db);
     }
-  </script>
+  } catch(err){
+    setStatus("Erreur import: " + err.message);
+  }
+});
+
+// Import direct depuis GitHub (raw)
+async function importFromGitHub(){
+  setStatus("Téléchargement depuis GitHub...");
+  try {
+    const res = await fetch(repoRawUrl);
+    if(!res.ok) throw new Error("Impossible de charger depuis GitHub (status " + res.status + ")");
+    const data = await res.json();
+    if(!Array.isArray(data)) throw new Error("Format non valide (attendu tableau)");
+    db = data; // replace local base with remote one (safer workflow)
+    saveLocalDB();
+    render(db);
+    setStatus("✅ Importé depuis GitHub ("+db.length+" entrées)");
+  } catch(e){
+    setStatus("Erreur GitHub: " + e.message);
+  }
+}
+
+function exportJSON(){
+  const blob = new Blob([JSON.stringify(db, null, 2)], {type:"application/json"});
+  downloadBlob(blob, "lishi_export.json");
+}
+function exportCSV(){
+  if(!db.length) return setStatus("Rien à exporter");
+  const keys = ["lishi","keyway","type","compat","notes"];
+  const rows = [keys.join(",")].concat(db.map(o=> keys.map(k=> JSON.stringify(o[k]||"").replace(/^"|"$/g,"")).join(",")));
+  const blob = new Blob([rows.join("\n")], {type:"text/csv"});
+  downloadBlob(blob, "lishi_export.csv");
+}
+
+function resetDB(){
+  if(!confirm("Remplacer la base locale par une base vide ?")) return;
+  db = [];
+  saveLocalDB();
+  render([]);
+  setStatus("Base réinitialisée.");
+}
+
+/* ===========================
+   Favoris + petites util
+   =========================== */
+
+function toggleFav(encoded){
+  const code = decodeURIComponent(encoded);
+  const favs = JSON.parse(localStorage.getItem(favKey) || "[]");
+  const idx = favs.indexOf(code);
+  if(idx === -1) favs.push(code); else favs.splice(idx,1);
+  localStorage.setItem(favKey, JSON.stringify(favs));
+  doSearch();
+}
+
+function downloadBlob(blob, filename){
+  // create a temporary link and click it
+  const url = URL.createObjectURL(blob);
+  const a = document.createElement("a");
+  a.href = url; a.download = filename; document.body.appendChild(a);
+  a.click(); setTimeout(()=>{ URL.revokeObjectURL(url); a.remove(); }, 500);
+}
+
+/* small escape */
+function escapeHTML(s){ return String(s||"").replace(/[&<>"']/g, c=>({ '&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":"&#39;"}[c])); }
+
+/* ===========================
+   Keyboard: search on Enter
+   =========================== */
+document.getElementById("q").addEventListener("keydown", (e)=>{
+  if(e.key === "Enter") doSearch();
+});
+
+</script>
 </body>
 </html>
