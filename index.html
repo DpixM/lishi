@@ -1,55 +1,52 @@
-<!doctype html>
+<!DOCTYPE html>
 <html lang="fr">
 <head>
-  <meta charset="utf-8"/>
-  <meta name="viewport" content="width=device-width,initial-scale=1"/>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Lishi ↔ Serrures (offline)</title>
+  <link rel="manifest" href="manifest.webmanifest">
   <style>
-    body{font-family:system-ui,Segoe UI,Roboto,Arial;margin:16px;color:#111}
-    h1{margin:0 0 8px;font-size:26px}
-    .small{color:#666;font-size:13px;margin-bottom:10px}
-    .row{display:flex;gap:8px;flex-wrap:wrap;align-items:center;margin:8px 0}
-    input,select,button{padding:8px;font-size:14px}
-    button{border-radius:6px;border:1px solid #ccc;background:#f7f7f7;cursor:pointer}
-    .primary{background:#0a7;color:#fff;border-color:#0a7}
-    table{width:100%;border-collapse:collapse;margin-top:10px}
-    th,td{border:1px solid #ddd;padding:8px;text-align:left;font-size:14px}
-    th{background:#f6f6f6}
-    #status{margin-top:6px;color:#444;font-size:13px}
+    body { font-family: Arial, sans-serif; margin: 20px; }
+    table { width: 100%; border-collapse: collapse; margin-top: 10px; }
+    th, td { border: 1px solid #ccc; padding: 8px; text-align: left; }
+    th { background: #f4f4f4; }
+    input, select, button { margin: 5px; padding: 5px; }
+    .error { color: red; }
   </style>
 </head>
 <body>
-  <h1>Lishi ↔ Serrures (offline)</h1>
-  <div class="small">Recherche par <b>code Lishi</b> (HU66, YALE-5…) ou par <b>marque/modèle</b> (VW Golf, Yale 6…). Tout reste local.</div>
+  <h1>🔑 Lishi ↔ Serrures (offline)</h1>
+  <p>Recherche par <b>code Lishi</b> (HU66, YALE-5...) ou par <b>marque/modèle</b> (VW Golf, Yale 6…). Tout reste local.</p>
 
-  <div class="row">
-    <input id="q" placeholder="Ex: HU66 ou Yale 5 ou VW Polo" style="flex:1;min-width:220px">
-    <button class="primary" onclick="doSearch()">Chercher</button>
-    <button onclick="resetView()">Tout afficher</button>
+  <input type="text" id="search" placeholder="Ex: HU66 ou Yale 5 ou VW Polo">
+  <button onclick="search()">Chercher</button>
+  <button onclick="showAll()">Tout afficher</button>
+  <br>
 
-    <label for="typeFilter">Filtrer :</label>
-    <select id="typeFilter" onchange="doSearch()">
-      <option value="">(tous)</option>
-      <option value="auto">auto</option>
-      <option value="euro_cylinder">euro_cylinder</option>
-      <option value="residential">residential</option>
-      <option value="motorbike">motorbike</option>
-      <option value="dimple">dimple</option>
-      <option value="special">special</option>
-    </select>
+  Filtrer :
+  <select id="filter" onchange="applyFilter()">
+    <option value="all">(tous types)</option>
+    <option value="auto">Automobile</option>
+    <option value="euro_cylinder">Cylindre européen</option>
+    <option value="residential">Résidentiel</option>
+  </select>
 
-    <input id="fileIn" type="file" accept=".json,.csv" style="display:none">
-    <button onclick="document.getElementById('fileIn').click()">Parcourir…</button>
-    <button class="primary" onclick="importFromGitHub()">Importer depuis GitHub</button>
-  </div>
+  <br><br>
 
-  <div id="status">Base locale : <span id="count">0</span> entrées.</div>
+  <button onclick="importFile()">📂 Parcourir...</button>
+  <button onclick="importGitHub()">📥 Importer depuis GitHub</button>
+  <button onclick="exportJSON()">Exporter JSON</button>
+  <button onclick="exportCSV()">Exporter CSV</button>
+  <button onclick="resetDB()">Reset base locale</button>
 
-  <table id="results" aria-live="polite">
+  <p><b>Total entrées importées :</b> <span id="count">0</span></p>
+  <p id="error" class="error"></p>
+
+  <table id="results">
     <thead>
       <tr>
         <th>Code Lishi</th>
-        <th>Keyway/Code</th>
+        <th>Keyway / Code</th>
         <th>Type</th>
         <th>Compatibilités</th>
         <th>Notes</th>
@@ -59,101 +56,123 @@
   </table>
 
 <script>
-/* --------- CONFIG --------- */
-/* si besoin, adapte juste cette URL vers TON fichier JSON brut (raw) */
-const repoRawUrl = "https://raw.githubusercontent.com/DpixM/lishi/main/lishi_db_full_seed.json";
-
-/* --------- STATE --------- */
 let db = [];
-const storageKey = "lishiData_v1";
 
-/* --------- HELPERS --------- */
-function setStatus(msg){ document.getElementById("status").innerText = msg; }
-function updateCount(){ document.getElementById("count").innerText = db.length || 0; }
-function saveLocal(){ localStorage.setItem(storageKey, JSON.stringify(db)); updateCount(); }
-function loadLocal(){
-  try{ const s = localStorage.getItem(storageKey); if(s){ db = JSON.parse(s)||[]; }}catch(e){}
-  updateCount();
+// 🔎 Chercher
+function search() {
+  const q = document.getElementById("search").value.toLowerCase();
+  const filtered = db.filter(row =>
+    Object.values(row).some(v => v.toLowerCase().includes(q))
+  );
+  render(filtered);
 }
 
-/* --------- RENDER --------- */
-function escapeHTML(s){ return String(s||"").replace(/[&<>"']/g, c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":"&#39;"}[c])); }
-function render(list){
-  const tb = document.querySelector("#results tbody");
-  tb.innerHTML = "";
-  if(!list.length){ tb.innerHTML = `<tr><td colspan="5" style="color:#666">Aucun résultat</td></tr>`; return; }
-  for(const r of list){
-    const tr = document.createElement("tr");
-    tr.innerHTML = `
-      <td>${escapeHTML(r.lishi||"")}</td>
-      <td>${escapeHTML(r.keyway||"")}</td>
-      <td>${escapeHTML(r.type||"")}</td>
-      <td>${escapeHTML(r.compat||"")}</td>
-      <td>${escapeHTML(r.notes||"")}</td>
-    `;
-    tb.appendChild(tr);
+// 📋 Tout afficher
+function showAll() { render(db); }
+
+// 🔽 Filtrer par type
+function applyFilter() {
+  const type = document.getElementById("filter").value;
+  if (type === "all") render(db);
+  else render(db.filter(r => r.type === type));
+}
+
+// 📂 Importer depuis fichier
+function importFile() {
+  const input = document.createElement("input");
+  input.type = "file";
+  input.accept = ".json,.csv";
+  input.onchange = e => {
+    const file = e.target.files[0];
+    const reader = new FileReader();
+    reader.onload = ev => {
+      if (file.name.endsWith(".json")) {
+        db = JSON.parse(ev.target.result);
+      } else {
+        db = parseCSV(ev.target.result);
+      }
+      saveDB();
+      render(db);
+    };
+    reader.readAsText(file);
+  };
+  input.click();
+}
+
+// 📥 Importer depuis GitHub
+async function importGitHub() {
+  try {
+    const res = await fetch("lishi_db_full_seed.json");
+    if (!res.ok) throw new Error("Fichier introuvable");
+    db = await res.json();
+    saveDB();
+    render(db);
+  } catch (err) {
+    document.getElementById("error").innerText = "❌ Échec import GitHub : " + err.message;
   }
 }
 
-/* --------- SEARCH --------- */
-function doSearch(){
-  const q = (document.getElementById("q").value||"").toLowerCase().trim();
-  const t = document.getElementById("typeFilter").value;
-  const res = db.filter(x=>{
-    if(t && x.type !== t) return false;
-    if(!q) return true;
-    return [x.lishi,x.keyway,x.compat,x.notes].some(v => (v||"").toLowerCase().includes(q));
+// 💾 Sauvegarde locale
+function saveDB() {
+  localStorage.setItem("lishi_db", JSON.stringify(db));
+}
+
+// 📤 Export JSON
+function exportJSON() {
+  const blob = new Blob([JSON.stringify(db, null, 2)], { type: "application/json" });
+  const url = URL.createObjectURL(blob);
+  const a = document.createElement("a");
+  a.href = url; a.download = "lishi_export.json"; a.click();
+}
+
+// 📤 Export CSV
+function exportCSV() {
+  let csv = "Code Lishi,Keyway,Type,Compatibilités,Notes\n";
+  db.forEach(r => {
+    csv += `"${r.code}","${r.keyway}","${r.type}","${r.compat}","${r.notes}"\n`;
   });
-  render(res);
-}
-function resetView(){ document.getElementById("q").value=""; document.getElementById("typeFilter").value=""; render(db); }
-
-/* --------- IMPORTS --------- */
-document.getElementById("fileIn").addEventListener("change", async ev=>{
-  const f = ev.target.files[0]; if(!f) return;
-  const txt = await f.text();
-  try{
-    if(f.name.toLowerCase().endsWith(".json")){
-      const arr = JSON.parse(txt);
-      if(!Array.isArray(arr)) throw new Error("JSON attendu = tableau d’objets");
-      db = db.concat(arr);
-    } else {
-      const lines = txt.split(/\r?\n/).filter(Boolean);
-      const header = lines.shift().split(/[,;]+/).map(s=>s.trim().toLowerCase());
-      const arr = lines.map(L=>{
-        const cols = L.split(/[,;]+/).map(s=>s.trim());
-        const o={}; header.forEach((h,i)=>o[h]=cols[i]||""); return o;
-      });
-      db = db.concat(arr);
-    }
-    saveLocal();
-    setStatus("Import OK. Total : "+db.length);
-    render(db);
-  }catch(e){
-    setStatus("Erreur import : "+e.message);
-  }
-});
-
-async function importFromGitHub(){
-  setStatus("Téléchargement depuis GitHub…");
-  try{
-    const r = await fetch(repoRawUrl);
-    if(!r.ok) throw new Error("HTTP "+r.status);
-    const arr = await r.json();
-    if(!Array.isArray(arr)) throw new Error("Format non valide");
-    db = arr; // on remplace la base locale par la version GitHub
-    saveLocal();
-    setStatus("✅ Importé depuis GitHub ("+db.length+" entrées)");
-    render(db);
-  }catch(e){
-    setStatus("❌ Échec import GitHub : "+e.message);
-  }
+  const blob = new Blob([csv], { type: "text/csv" });
+  const url = URL.createObjectURL(blob);
+  const a = document.createElement("a");
+  a.href = url; a.download = "lishi_export.csv"; a.click();
 }
 
-/* --------- INIT --------- */
-loadLocal();
-render(db);
-document.getElementById("q").addEventListener("keydown",e=>{ if(e.key==="Enter") doSearch(); });
+// ♻ Reset DB
+function resetDB() {
+  localStorage.removeItem("lishi_db");
+  db = [];
+  render(db);
+}
+
+// 🖼️ Affichage tableau
+function render(data) {
+  const tbody = document.querySelector("#results tbody");
+  tbody.innerHTML = "";
+  data.forEach(r => {
+    const tr = document.createElement("tr");
+    tr.innerHTML = `<td>${r.code}</td><td>${r.keyway}</td><td>${r.type}</td><td>${r.compat}</td><td>${r.notes}</td>`;
+    tbody.appendChild(tr);
+  });
+  document.getElementById("count").innerText = data.length;
+}
+
+// CSV ➝ JSON
+function parseCSV(text) {
+  const rows = text.split("\n").map(r => r.split(","));
+  const headers = rows.shift();
+  return rows.filter(r => r.length > 1).map(r => ({
+    code: r[0], keyway: r[1], type: r[2], compat: r[3], notes: r[4]
+  }));
+}
+
+// 🔄 Charger base locale au démarrage
+window.onload = () => {
+  const saved = localStorage.getItem("lishi_db");
+  if (saved) {
+    db = JSON.parse(saved);
+    render(db);
+  }
+};
 </script>
 </body>
 </html>
