@@ -1,0 +1,667 @@
+[
+  {
+    "lishi": "HU66",
+    "keyway": "HU66",
+    "type": "auto",
+    "compat": "Volkswagen / Audi / Seat / Skoda",
+    "notes": "VAG family; check door vs ignition and year"
+  },
+  {
+    "lishi": "HU49",
+    "keyway": "HU49",
+    "type": "auto",
+    "compat": "Volkswagen / Audi / Seat / Skoda",
+    "notes": "VAG family; check door vs ignition and year"
+  },
+  {
+    "lishi": "HU162T",
+    "keyway": "HU162T",
+    "type": "auto",
+    "compat": "Volkswagen / Audi / Seat / Skoda",
+    "notes": "VAG family; check door vs ignition and year"
+  },
+  {
+    "lishi": "HU162T(7)",
+    "keyway": "HU162T(7)",
+    "type": "auto",
+    "compat": "Volkswagen / Audi / Seat / Skoda",
+    "notes": "VAG family; check door vs ignition and year"
+  },
+  {
+    "lishi": "HU162T(8)",
+    "keyway": "HU162T(8)",
+    "type": "auto",
+    "compat": "Volkswagen / Audi / Seat / Skoda",
+    "notes": "VAG family; check door vs ignition and year"
+  },
+  {
+    "lishi": "HU162T(9)",
+    "keyway": "HU162T(9)",
+    "type": "auto",
+    "compat": "Volkswagen / Audi / Seat / Skoda",
+    "notes": "VAG family; check door vs ignition and year"
+  },
+  {
+    "lishi": "HU162T(10)",
+    "keyway": "HU162T(10)",
+    "type": "auto",
+    "compat": "Volkswagen / Audi / Seat / Skoda",
+    "notes": "VAG family; check door vs ignition and year"
+  },
+  {
+    "lishi": "HU92",
+    "keyway": "HU92",
+    "type": "auto",
+    "compat": "BMW 3/5/7 series (E/F), Mini",
+    "notes": "Common laser keyway"
+  },
+  {
+    "lishi": "BM2",
+    "keyway": "BM2",
+    "type": "auto",
+    "compat": "BMW older non-laser",
+    "notes": "Older blades"
+  },
+  {
+    "lishi": "HU64",
+    "keyway": "HU64",
+    "type": "auto",
+    "compat": "Mercedes-Benz",
+    "notes": "Variant depends on platform/year"
+  },
+  {
+    "lishi": "HU39",
+    "keyway": "HU39",
+    "type": "auto",
+    "compat": "Mercedes-Benz",
+    "notes": "Variant depends on platform/year"
+  },
+  {
+    "lishi": "HU82",
+    "keyway": "HU82",
+    "type": "auto",
+    "compat": "Mercedes-Benz",
+    "notes": "Variant depends on platform/year"
+  },
+  {
+    "lishi": "HU101",
+    "keyway": "HU101",
+    "type": "auto",
+    "compat": "Ford / Jaguar / Land Rover / Range Rover",
+    "notes": "Very common across JLR/Ford families"
+  },
+  {
+    "lishi": "TIBBE-6",
+    "keyway": "Tibbe 6-cut",
+    "type": "auto",
+    "compat": "Ford older (Mondeo/Transit), Jaguar (old)",
+    "notes": "Use Tibbe pick; not a 2-in-1 decoder"
+  },
+  {
+    "lishi": "VA2",
+    "keyway": "VA2",
+    "type": "auto",
+    "compat": "Peugeot / Citroën (PSA)",
+    "notes": ""
+  },
+  {
+    "lishi": "VA3",
+    "keyway": "VA3",
+    "type": "auto",
+    "compat": "Peugeot / Citroën (PSA)",
+    "notes": ""
+  },
+  {
+    "lishi": "NE72",
+    "keyway": "NE72",
+    "type": "auto",
+    "compat": "Renault / Dacia",
+    "notes": "Older vs newer variants; confirm model"
+  },
+  {
+    "lishi": "NE78",
+    "keyway": "NE78",
+    "type": "auto",
+    "compat": "Renault / Dacia",
+    "notes": "Older vs newer variants; confirm model"
+  },
+  {
+    "lishi": "HU100",
+    "keyway": "HU100",
+    "type": "auto",
+    "compat": "GM / Opel / Vauxhall",
+    "notes": ""
+  },
+  {
+    "lishi": "HU100R",
+    "keyway": "HU100R",
+    "type": "auto",
+    "compat": "GM / Opel / Vauxhall",
+    "notes": ""
+  },
+  {
+    "lishi": "VAU1",
+    "keyway": "VAU1",
+    "type": "auto",
+    "compat": "GM / Opel / Vauxhall",
+    "notes": ""
+  },
+  {
+    "lishi": "SIP22",
+    "keyway": "SIP22",
+    "type": "auto",
+    "compat": "Fiat / Alfa Romeo / Lancia",
+    "notes": "Common Italian laser keyway"
+  },
+  {
+    "lishi": "TOY48",
+    "keyway": "TOY48",
+    "type": "auto",
+    "compat": "Toyota / Lexus",
+    "notes": "Check generation"
+  },
+  {
+    "lishi": "TOY48R",
+    "keyway": "TOY48R",
+    "type": "auto",
+    "compat": "Toyota / Lexus",
+    "notes": "Check generation"
+  },
+  {
+    "lishi": "TOY43",
+    "keyway": "TOY43",
+    "type": "auto",
+    "compat": "Toyota / Lexus",
+    "notes": "Check generation"
+  },
+  {
+    "lishi": "TOY45",
+    "keyway": "TOY45",
+    "type": "auto",
+    "compat": "Toyota / Lexus",
+    "notes": "Check generation"
+  },
+  {
+    "lishi": "TOY40",
+    "keyway": "TOY40",
+    "type": "auto",
+    "compat": "Toyota / Lexus",
+    "notes": "Check generation"
+  },
+  {
+    "lishi": "TOY41",
+    "keyway": "TOY41",
+    "type": "auto",
+    "compat": "Toyota / Lexus",
+    "notes": "Check generation"
+  },
+  {
+    "lishi": "HON66",
+    "keyway": "HON66",
+    "type": "auto",
+    "compat": "Honda / Acura",
+    "notes": ""
+  },
+  {
+    "lishi": "HON58R",
+    "keyway": "HON58R",
+    "type": "auto",
+    "compat": "Honda / Acura",
+    "notes": ""
+  },
+  {
+    "lishi": "HON101",
+    "keyway": "HON101",
+    "type": "auto",
+    "compat": "Honda / Acura",
+    "notes": ""
+  },
+  {
+    "lishi": "HYN14",
+    "keyway": "HYN14",
+    "type": "auto",
+    "compat": "Hyundai / Kia",
+    "notes": ""
+  },
+  {
+    "lishi": "HY22",
+    "keyway": "HY22",
+    "type": "auto",
+    "compat": "Hyundai / Kia",
+    "notes": ""
+  },
+  {
+    "lishi": "HY20",
+    "keyway": "HY20",
+    "type": "auto",
+    "compat": "Hyundai / Kia",
+    "notes": ""
+  },
+  {
+    "lishi": "MAZ24",
+    "keyway": "MAZ24",
+    "type": "auto",
+    "compat": "Mazda",
+    "notes": ""
+  },
+  {
+    "lishi": "MIT8",
+    "keyway": "MIT8",
+    "type": "auto",
+    "compat": "Mitsubishi",
+    "notes": ""
+  },
+  {
+    "lishi": "MIT11",
+    "keyway": "MIT11",
+    "type": "auto",
+    "compat": "Mitsubishi",
+    "notes": ""
+  },
+  {
+    "lishi": "NSN14",
+    "keyway": "NSN14",
+    "type": "auto",
+    "compat": "Nissan",
+    "notes": ""
+  },
+  {
+    "lishi": "NSN11",
+    "keyway": "NSN11",
+    "type": "auto",
+    "compat": "Nissan",
+    "notes": ""
+  },
+  {
+    "lishi": "SUB1",
+    "keyway": "SUB1",
+    "type": "auto",
+    "compat": "Subaru",
+    "notes": ""
+  },
+  {
+    "lishi": "SUZUKI-10",
+    "keyway": "SUZUKI-10",
+    "type": "auto",
+    "compat": "Suzuki",
+    "notes": ""
+  },
+  {
+    "lishi": "HU56",
+    "keyway": "HU56",
+    "type": "auto",
+    "compat": "Volvo",
+    "notes": ""
+  },
+  {
+    "lishi": "LR-HU101",
+    "keyway": "HU101",
+    "type": "auto",
+    "compat": "Land Rover / Range Rover",
+    "notes": "Same family as HU101 (JLR)"
+  },
+  {
+    "lishi": "YALE-5",
+    "keyway": "Yale 5-pin",
+    "type": "euro_cylinder",
+    "compat": "Yale Euro profile 5 goupilles",
+    "notes": "Use Yale 5-pin decoder/pick where available"
+  },
+  {
+    "lishi": "YALE-6",
+    "keyway": "Yale 6-pin",
+    "type": "euro_cylinder",
+    "compat": "Yale Euro profile 6 goupilles",
+    "notes": ""
+  },
+  {
+    "lishi": "VACHETTE-EU5",
+    "keyway": "Vachette Euro 5",
+    "type": "euro_cylinder",
+    "compat": "Vachette (gammes standard 5 goupilles)",
+    "notes": "Profil euro standard (non haute sécurité)"
+  },
+  {
+    "lishi": "VACHETTE-EU6",
+    "keyway": "Vachette Euro 6",
+    "type": "euro_cylinder",
+    "compat": "Vachette (gammes standard 6 goupilles)",
+    "notes": ""
+  },
+  {
+    "lishi": "VACHETTE-DIMPLE",
+    "keyway": "Vachette dimple (générique)",
+    "type": "dimple",
+    "compat": "Vachette dimple/variantes",
+    "notes": "Vérifier modèle exact (VX, VIP, Radial SI etc.)"
+  },
+  {
+    "lishi": "ABUS-EC5",
+    "keyway": "ABUS EC5",
+    "type": "euro_cylinder",
+    "compat": "ABUS EC5 / EC-S families",
+    "notes": ""
+  },
+  {
+    "lishi": "ABUS-C83",
+    "keyway": "ABUS C83",
+    "type": "euro_cylinder",
+    "compat": "ABUS C83 (5/6 pin)",
+    "notes": ""
+  },
+  {
+    "lishi": "ABUS-DIMPLE",
+    "keyway": "ABUS dimple (générique)",
+    "type": "dimple",
+    "compat": "ABUS dimple systems",
+    "notes": "Vérifier par modèle (Bravus/XP)"
+  },
+  {
+    "lishi": "BRICARD-EU5",
+    "keyway": "Bricard Euro 5",
+    "type": "euro_cylinder",
+    "compat": "Bricard séries standard 5p",
+    "notes": ""
+  },
+  {
+    "lishi": "BRICARD-EU6",
+    "keyway": "Bricard Euro 6",
+    "type": "euro_cylinder",
+    "compat": "Bricard séries standard 6p",
+    "notes": ""
+  },
+  {
+    "lishi": "BRICARD-DIMPLE",
+    "keyway": "Bricard dimple (générique)",
+    "type": "dimple",
+    "compat": "Bricard hautes sécu (ex: Héraclès, Sérénis)",
+    "notes": "Vérifier modèle"
+  },
+  {
+    "lishi": "CISA-EU",
+    "keyway": "CISA euro",
+    "type": "euro_cylinder",
+    "compat": "CISA séries euro",
+    "notes": ""
+  },
+  {
+    "lishi": "CISA-DIMPLE",
+    "keyway": "CISA dimple",
+    "type": "dimple",
+    "compat": "CISA Astral / AP3 / RS3 (selon)",
+    "notes": "Vérifier modèle"
+  },
+  {
+    "lishi": "ISEO-R6",
+    "keyway": "ISEO R6",
+    "type": "dimple",
+    "compat": "ISEO R6",
+    "notes": "Dimple"
+  },
+  {
+    "lishi": "ISEO-EU",
+    "keyway": "ISEO euro",
+    "type": "euro_cylinder",
+    "compat": "ISEO séries euro",
+    "notes": ""
+  },
+  {
+    "lishi": "MOTTURA-EU",
+    "keyway": "Mottura euro",
+    "type": "euro_cylinder",
+    "compat": "Mottura classiques",
+    "notes": ""
+  },
+  {
+    "lishi": "SECUREMME-EU",
+    "keyway": "Securemme euro",
+    "type": "euro_cylinder",
+    "compat": "Securemme classiques",
+    "notes": ""
+  },
+  {
+    "lishi": "KESO-EU",
+    "keyway": "KESO euro",
+    "type": "euro_cylinder",
+    "compat": "KESO (hors modèles HS)",
+    "notes": ""
+  },
+  {
+    "lishi": "KESO-DIMPLE",
+    "keyway": "KESO dimple",
+    "type": "dimple",
+    "compat": "KESO (ex: 2000/2500/4000)",
+    "notes": "Vérifier modèle, souvent HS"
+  },
+  {
+    "lishi": "KABA-8",
+    "keyway": "KABA 8",
+    "type": "dimple",
+    "compat": "KABA 8 systèmes",
+    "notes": "Dimple / HS"
+  },
+  {
+    "lishi": "KABA-EU",
+    "keyway": "KABA euro",
+    "type": "euro_cylinder",
+    "compat": "KABA euro",
+    "notes": ""
+  },
+  {
+    "lishi": "DOM-EU",
+    "keyway": "DOM euro",
+    "type": "euro_cylinder",
+    "compat": "DOM (ex: RN, RS)",
+    "notes": ""
+  },
+  {
+    "lishi": "DOM-DIMPLE",
+    "keyway": "DOM dimple",
+    "type": "dimple",
+    "compat": "DOM ix/ix Twin etc.",
+    "notes": "HS, selon région"
+  },
+  {
+    "lishi": "EVVA-EU",
+    "keyway": "EVVA euro",
+    "type": "euro_cylinder",
+    "compat": "EVVA (non HS)",
+    "notes": ""
+  },
+  {
+    "lishi": "EVVA-DIMPLE",
+    "keyway": "EVVA dimple",
+    "type": "dimple",
+    "compat": "EVVA (ex: EPS, ICS, 3KS)",
+    "notes": "HS"
+  },
+  {
+    "lishi": "WINKHAUS-EU",
+    "keyway": "Winkhaus euro",
+    "type": "euro_cylinder",
+    "compat": "Winkhaus séries euro",
+    "notes": ""
+  },
+  {
+    "lishi": "BKS-EU",
+    "keyway": "BKS euro",
+    "type": "euro_cylinder",
+    "compat": "BKS séries euro",
+    "notes": ""
+  },
+  {
+    "lishi": "CES-EU",
+    "keyway": "CES euro",
+    "type": "euro_cylinder",
+    "compat": "CES classiques",
+    "notes": ""
+  },
+  {
+    "lishi": "MTL-EU",
+    "keyway": "Mul-T-Lock euro",
+    "type": "dimple",
+    "compat": "Mul-T-Lock Classic/Interactive/MT5+",
+    "notes": "Haute sécurité"
+  },
+  {
+    "lishi": "RUKO-EU",
+    "keyway": "Ruko (Assa) euro",
+    "type": "euro_cylinder",
+    "compat": "Ruko / ASSA ABLOY Denmark",
+    "notes": ""
+  },
+  {
+    "lishi": "TESA-EU",
+    "keyway": "TESA euro",
+    "type": "euro_cylinder",
+    "compat": "TESA (Spain) classiques",
+    "notes": ""
+  },
+  {
+    "lishi": "TESA-DIMPLE",
+    "keyway": "TESA dimple",
+    "type": "dimple",
+    "compat": "TESA T60/T70/TS line (selon)",
+    "notes": ""
+  },
+  {
+    "lishi": "CORBIN-EU",
+    "keyway": "Corbin euro",
+    "type": "euro_cylinder",
+    "compat": "Corbin (Italie)",
+    "notes": ""
+  },
+  {
+    "lishi": "MAUER-EU",
+    "keyway": "Mauer euro",
+    "type": "euro_cylinder",
+    "compat": "Mauer cylindres",
+    "notes": ""
+  },
+  {
+    "lishi": "GU-EU",
+    "keyway": "GU euro",
+    "type": "euro_cylinder",
+    "compat": "Gretsch-Unitas (portes)",
+    "notes": ""
+  },
+  {
+    "lishi": "KFV-EU",
+    "keyway": "KFV euro",
+    "type": "euro_cylinder",
+    "compat": "KFV",
+    "notes": ""
+  },
+  {
+    "lishi": "ROTO-EU",
+    "keyway": "Roto euro",
+    "type": "euro_cylinder",
+    "compat": "Roto",
+    "notes": ""
+  },
+  {
+    "lishi": "FUHR-EU",
+    "keyway": "Fuhr euro",
+    "type": "euro_cylinder",
+    "compat": "Fuhr",
+    "notes": ""
+  },
+  {
+    "lishi": "FICHET",
+    "keyway": "Fichet (spécifique)",
+    "type": "special",
+    "compat": "Fichet serrures spécifiques",
+    "notes": "Systèmes propriétaires; outils dédiés nécessaires"
+  },
+  {
+    "lishi": "SC1",
+    "keyway": "Schlage SC1",
+    "type": "residential",
+    "compat": "Schlage 5-pin (US)",
+    "notes": ""
+  },
+  {
+    "lishi": "SC4",
+    "keyway": "Schlage SC4",
+    "type": "residential",
+    "compat": "Schlage 6-pin (US)",
+    "notes": ""
+  },
+  {
+    "lishi": "KW1",
+    "keyway": "Kwikset KW1",
+    "type": "residential",
+    "compat": "Kwikset 5-pin (US)",
+    "notes": ""
+  },
+  {
+    "lishi": "KW5",
+    "keyway": "Kwikset KW5",
+    "type": "residential",
+    "compat": "Kwikset 6-pin (US)",
+    "notes": ""
+  },
+  {
+    "lishi": "AM5",
+    "keyway": "American AM5",
+    "type": "residential",
+    "compat": "American Lock padlocks",
+    "notes": ""
+  },
+  {
+    "lishi": "M1/MS2",
+    "keyway": "Master M1/MS2",
+    "type": "residential",
+    "compat": "Master Lock padlocks",
+    "notes": ""
+  },
+  {
+    "lishi": "SCOOTER-YAMAHA",
+    "keyway": "Yamaha scooter",
+    "type": "motorbike",
+    "compat": "Yamaha / MBK (Booster, Nitro, etc.)",
+    "notes": "Profils variables; vérifier par modèle/année"
+  },
+  {
+    "lishi": "SCOOTER-PIAGGIO",
+    "keyway": "Piaggio/Vespa",
+    "type": "motorbike",
+    "compat": "Piaggio / Vespa",
+    "notes": "Selon génération"
+  },
+  {
+    "lishi": "SCOOTER-PEUGEOT",
+    "keyway": "Peugeot scooter",
+    "type": "motorbike",
+    "compat": "Peugeot (Kisbee, Speedfight, etc.)",
+    "notes": ""
+  },
+  {
+    "lishi": "SCOOTER-KYMCO",
+    "keyway": "Kymco scooter",
+    "type": "motorbike",
+    "compat": "Kymco",
+    "notes": ""
+  },
+  {
+    "lishi": "SCOOTER-SYM",
+    "keyway": "SYM scooter",
+    "type": "motorbike",
+    "compat": "SYM",
+    "notes": ""
+  },
+  {
+    "lishi": "SCOOTER-HONDA",
+    "keyway": "Honda scooter",
+    "type": "motorbike",
+    "compat": "Honda PCX, SH etc.",
+    "notes": ""
+  },
+  {
+    "lishi": "SCOOTER-SUZUKI",
+    "keyway": "Suzuki scooter",
+    "type": "motorbike",
+    "compat": "Burgman etc.",
+    "notes": ""
+  }
+]
