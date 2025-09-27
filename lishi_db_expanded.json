@@ -1,0 +1,422 @@
+[
+  {
+    "lishi": "HU66",
+    "keyway": "HU66",
+    "type": "auto",
+    "compat": "VW / Audi / Seat / Skoda (VAG common)",
+    "notes": "Very common VAG keyway (doors/ignition)"
+  },
+  {
+    "lishi": "HU162T(8)",
+    "keyway": "HU162T-8",
+    "type": "auto",
+    "compat": "VW / Audi / Seat (MQB variants)",
+    "notes": "8 depth variant"
+  },
+  {
+    "lishi": "HU162T(9)",
+    "keyway": "HU162T-9",
+    "type": "auto",
+    "compat": "VW / Audi / Seat (MQB variants)",
+    "notes": "9 depth variant"
+  },
+  {
+    "lishi": "HU162T(10)",
+    "keyway": "HU162T-10",
+    "type": "auto",
+    "compat": "VW / Audi / Seat (MQB variants)",
+    "notes": "10 depth variant"
+  },
+  {
+    "lishi": "HU49",
+    "keyway": "HU49",
+    "type": "auto",
+    "compat": "VW / Audi older models",
+    "notes": "Older VAG platforms"
+  },
+  {
+    "lishi": "HU92",
+    "keyway": "HU92",
+    "type": "auto",
+    "compat": "BMW (E/F series, some Minis)",
+    "notes": "Laser keyway common on BMW"
+  },
+  {
+    "lishi": "HU39",
+    "keyway": "HU39",
+    "type": "auto",
+    "compat": "Mercedes older models",
+    "notes": "Older Mercedes profiles"
+  },
+  {
+    "lishi": "HU64",
+    "keyway": "HU64",
+    "type": "auto",
+    "compat": "Mercedes-Benz (various)",
+    "notes": "Common Mercedes Lishi tool"
+  },
+  {
+    "lishi": "HU101",
+    "keyway": "HU101",
+    "type": "auto",
+    "compat": "Ford / Jaguar / Land Rover / Range Rover (var.)",
+    "notes": "Often used by Jaguar/Land Rover families"
+  },
+  {
+    "lishi": "HU100",
+    "keyway": "HU100",
+    "type": "auto",
+    "compat": "GM / Opel / Vauxhall",
+    "notes": "GM 10-cut family"
+  },
+  {
+    "lishi": "VA2",
+    "keyway": "VA2",
+    "type": "auto",
+    "compat": "Peugeot / Citroën / PSA family",
+    "notes": "Common French keyway"
+  },
+  {
+    "lishi": "NE72",
+    "keyway": "NE72",
+    "type": "auto",
+    "compat": "Renault older models",
+    "notes": "Renault keyway family, check model year"
+  },
+  {
+    "lishi": "NE78",
+    "keyway": "NE78",
+    "type": "auto",
+    "compat": "Renault (various)",
+    "notes": "Variant for some Renault models"
+  },
+  {
+    "lishi": "TOY48",
+    "keyway": "TOY48",
+    "type": "auto",
+    "compat": "Toyota / Lexus (many)",
+    "notes": "Laser keyway Toyota"
+  },
+  {
+    "lishi": "TOY43",
+    "keyway": "TOY43",
+    "type": "auto",
+    "compat": "Toyota older 10-cut",
+    "notes": "Older Toyota keyway"
+  },
+  {
+    "lishi": "HON66",
+    "keyway": "HON66",
+    "type": "auto",
+    "compat": "Honda / Acura (many)",
+    "notes": "Honda laser keyway family"
+  },
+  {
+    "lishi": "HON58R",
+    "keyway": "HON58R",
+    "type": "auto",
+    "compat": "Honda older",
+    "notes": "Older Honda variants"
+  },
+  {
+    "lishi": "HYN14",
+    "keyway": "HYN14",
+    "type": "auto",
+    "compat": "Hyundai / Kia",
+    "notes": "Laser keyway family"
+  },
+  {
+    "lishi": "HY22",
+    "keyway": "HY22",
+    "type": "auto",
+    "compat": "Hyundai / Kia older",
+    "notes": "Older variant"
+  },
+  {
+    "lishi": "MAZ24",
+    "keyway": "MAZ24",
+    "type": "auto",
+    "compat": "Mazda older",
+    "notes": ""
+  },
+  {
+    "lishi": "MIT8",
+    "keyway": "MIT8",
+    "type": "auto",
+    "compat": "Mitsubishi older",
+    "notes": ""
+  },
+  {
+    "lishi": "NSN14",
+    "keyway": "NSN14",
+    "type": "auto",
+    "compat": "Nissan / Datsun (various)",
+    "notes": ""
+  },
+  {
+    "lishi": "SIP22",
+    "keyway": "SIP22",
+    "type": "auto",
+    "compat": "Fiat / Alfa / Lancia",
+    "notes": "Common italian groups"
+  },
+  {
+    "lishi": "HU162T",
+    "keyway": "HU162T",
+    "type": "auto",
+    "compat": "VW group general",
+    "notes": "Generic reference"
+  },
+  {
+    "lishi": "VAU1",
+    "keyway": "VAU1",
+    "type": "auto",
+    "compat": "Opel / Vauxhall variants",
+    "notes": "Generic Opel keyways"
+  },
+  {
+    "lishi": "VA3",
+    "keyway": "VA3",
+    "type": "auto",
+    "compat": "Peugeot/Citroën variant",
+    "notes": "Check specific model"
+  },
+  {
+    "lishi": "BM2",
+    "keyway": "BM2",
+    "type": "auto",
+    "compat": "BMW older",
+    "notes": "non-laser older cylinders"
+  },
+  {
+    "lishi": "HU82",
+    "keyway": "HU82",
+    "type": "auto",
+    "compat": "Mercedes newer/Laser",
+    "notes": "Variant"
+  },
+  {
+    "lishi": "YALE-5",
+    "keyway": "YALE-5",
+    "type": "euro_cylinder",
+    "compat": "Yale Euro 5-pin",
+    "notes": "Common euro cylinder Yale 5 pins"
+  },
+  {
+    "lishi": "YALE-6",
+    "keyway": "YALE-6",
+    "type": "euro_cylinder",
+    "compat": "Yale Euro 6-pin",
+    "notes": "6-pin variants"
+  },
+  {
+    "lishi": "ABUS5",
+    "keyway": "ABUS5",
+    "type": "euro_cylinder",
+    "compat": "Abus cylinder family",
+    "notes": "Check specific model"
+  },
+  {
+    "lishi": "KABA",
+    "keyway": "KABA",
+    "type": "euro_cylinder",
+    "compat": "Kaba / Assa dimple systems",
+    "notes": "Specialty dimple"
+  },
+  {
+    "lishi": "SC1",
+    "keyway": "SC1",
+    "type": "residential",
+    "compat": "Schlage SC1",
+    "notes": "Schlage residential 5-pin"
+  },
+  {
+    "lishi": "SC4",
+    "keyway": "SC4",
+    "type": "residential",
+    "compat": "Schlage SC4",
+    "notes": "6-pin variants"
+  },
+  {
+    "lishi": "KW1",
+    "keyway": "KW1",
+    "type": "residential",
+    "compat": "Kwikset KW1",
+    "notes": "US Kwikset"
+  },
+  {
+    "lishi": "KW5",
+    "keyway": "KW5",
+    "type": "residential",
+    "compat": "Kwikset KW5",
+    "notes": "6-pin Kwikset"
+  },
+  {
+    "lishi": "AM5",
+    "keyway": "AM5",
+    "type": "residential",
+    "compat": "American Lock AM5",
+    "notes": "Padlock tooling"
+  },
+  {
+    "lishi": "M1/MS2",
+    "keyway": "M1/MS2",
+    "type": "residential",
+    "compat": "Master M1 / MS2",
+    "notes": "Common padlocks"
+  },
+  {
+    "lishi": "KABA-8",
+    "keyway": "KABA-8",
+    "type": "dimple",
+    "compat": "KABA dimple family",
+    "notes": "High security - availability varies"
+  },
+  {
+    "lishi": "ISEO-R6",
+    "keyway": "ISEO-R6",
+    "type": "dimple",
+    "compat": "ISEO R6",
+    "notes": "European dimple locks"
+  },
+  {
+    "lishi": "HU87",
+    "keyway": "HU87",
+    "type": "auto",
+    "compat": "VW/Audi variant",
+    "notes": ""
+  },
+  {
+    "lishi": "HU83",
+    "keyway": "HU83",
+    "type": "auto",
+    "compat": "VW older",
+    "notes": ""
+  },
+  {
+    "lishi": "HU100R",
+    "keyway": "HU100R",
+    "type": "auto",
+    "compat": "GM R variant",
+    "notes": ""
+  },
+  {
+    "lishi": "VAG2015",
+    "keyway": "VAG2015",
+    "type": "auto",
+    "compat": "VAG older family",
+    "notes": ""
+  },
+  {
+    "lishi": "HY20",
+    "keyway": "HY20",
+    "type": "auto",
+    "compat": "Hyundai variant",
+    "notes": ""
+  },
+  {
+    "lishi": "HU162T(7)",
+    "keyway": "HU162T(7)",
+    "type": "auto",
+    "compat": "VAG variant 7 cut",
+    "notes": ""
+  },
+  {
+    "lishi": "HON101",
+    "keyway": "HON101",
+    "type": "auto",
+    "compat": "Honda variant",
+    "notes": ""
+  },
+  {
+    "lishi": "TOY45",
+    "keyway": "TOY45",
+    "type": "auto",
+    "compat": "Toyota variant",
+    "notes": ""
+  },
+  {
+    "lishi": "NSN11",
+    "keyway": "NSN11",
+    "type": "auto",
+    "compat": "Nissan variant",
+    "notes": ""
+  },
+  {
+    "lishi": "SCOOTER-YAMAHA",
+    "keyway": "SCOOTER-YAMAHA",
+    "type": "motorbike",
+    "compat": "Yamaha / MBK scooters (Booster, Nitro etc.)",
+    "notes": "Many scooters use simple profile keys; check specific model"
+  },
+  {
+    "lishi": "SCOOTER-SYM",
+    "keyway": "SCOOTER-SYM",
+    "type": "motorbike",
+    "compat": "SYM / Kymco scooters",
+    "notes": "Generic scooter keyways"
+  },
+  {
+    "lishi": "SCOOTER-PIAGGIO",
+    "keyway": "SCOOTER-PIAGGIO",
+    "type": "motorbike",
+    "compat": "Piaggio / Vespa",
+    "notes": "Some use tubular or specific profiles"
+  },
+  {
+    "lishi": "SCOOTER-HONDA",
+    "keyway": "SCOOTER-HONDA",
+    "type": "motorbike",
+    "compat": "Honda scooters (PCX, SH)",
+    "notes": "Motorbike keys often different from car keys"
+  },
+  {
+    "lishi": "AUDI-HU49",
+    "keyway": "HU49",
+    "type": "auto",
+    "compat": "Audi older",
+    "notes": ""
+  },
+  {
+    "lishi": "AUDI-HU162",
+    "keyway": "HU162",
+    "type": "auto",
+    "compat": "Audi MQB",
+    "notes": ""
+  },
+  {
+    "lishi": "VW-HU66",
+    "keyway": "HU66",
+    "type": "auto",
+    "compat": "VW common",
+    "notes": ""
+  },
+  {
+    "lishi": "RANGE-HU101",
+    "keyway": "HU101",
+    "type": "auto",
+    "compat": "Range Rover / Land Rover",
+    "notes": ""
+  },
+  {
+    "lishi": "JAG-HU101",
+    "keyway": "HU101",
+    "type": "auto",
+    "compat": "Jaguar",
+    "notes": ""
+  },
+  {
+    "lishi": "MB-HU64",
+    "keyway": "HU64",
+    "type": "auto",
+    "compat": "Mercedes-Benz",
+    "notes": ""
+  },
+  {
+    "lishi": "BMW-HU92",
+    "keyway": "HU92",
+    "type": "auto",
+    "compat": "BMW",
+    "notes": ""
+  }
+]
