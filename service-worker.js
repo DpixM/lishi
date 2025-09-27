@@ -1,4 +1,4 @@
-const CACHE = "lishi-cache-v7";
+const CACHE = "lishi-cache-v8";
 const ASSETS = ["./","./index.html","./manifest.webmanifest","./icon-192.png","./icon-512.png"];
 
 self.addEventListener("install", e=>{
@@ -16,4 +16,5 @@ self.addEventListener("fetch", e=>{
     }).catch(()=> caches.match("./index.html")))
   );
 });
+
 
